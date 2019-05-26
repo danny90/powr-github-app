@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  login: MyString
+  user_id: 1
+  avatar_url: MyText
+  url: MyText
+  repos_url: MyText
+  user_type: MyString
+  name: MyString
+  company: MyString
+  location: MyString
+  email: MyString
+  public_repos: 1
+  user_created_at: 2019-05-25 16:34:37
+  user_updated_at: 2019-05-25 16:34:37
+  disk_usage: 1
+
+two:
+  login: MyString
+  user_id: 1
+  avatar_url: MyText
+  url: MyText
+  repos_url: MyText
+  user_type: MyString
+  name: MyString
+  company: MyString
+  location: MyString
+  email: MyString
+  public_repos: 1
+  user_created_at: 2019-05-25 16:34:37
+  user_updated_at: 2019-05-25 16:34:37
+  disk_usage: 1

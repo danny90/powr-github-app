@@ -1,0 +1,30 @@
+<h2 style="text-align:center"><strong>Login History</strong></h2>
+
+<table>
+  <tr>
+    <th>Created-Date</th>
+    <th>User-ID</th>
+    <th>Login</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>URL</th>
+    <th>Public-Repos</th>
+    <th>Type</th>
+    <th>User-Updated-Date</th>
+    <th>Disk-Usage</th>
+  </tr>
+  <% @histories.each do |history| %>
+    <tr>
+      <td><%= history.created_at.localtime.to_s(:short) %></td>
+      <td><%= history.user_id %></td>
+      <td><%= history.login %></td>
+      <td><%= history.name %></td>
+      <td><%= history.email %></td>
+      <td><%= history.url %></td>
+      <td><%= history.public_repos %></td>
+      <td><%= history.user_type %></td>
+      <td><%= history.user_updated_at.localtime.to_s(:short) %></td>
+      <td><%= history.disk_usage %></td>
+    </tr>
+  <% end %>
+</table>

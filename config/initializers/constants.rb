@@ -1,0 +1,2 @@
+LOGIN_USERNAME = 'danny90'
+ALLOW_SIGNUP = false
