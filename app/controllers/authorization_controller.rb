@@ -1,10 +1,32 @@
+require "base64"
+
 class AuthorizationController < ApplicationController
   def index
     @response1 = HTTP.headers(:accept => "application/json")
       .post("https://github.com/login/oauth/access_token?client_id=#{ENV['CLIENT_ID']}&client_secret=#{ENV['CLIENT_SECRET']}&code=#{params[:code]}").to_s
     @access_token = JSON.parse(@response1)['access_token']
     @response2 = JSON.parse(HTTP.auth("Bearer #{@access_token}").get("https://api.github.com/user"))
-    
+
+    @response3 = JSON.parse(HTTP.get("https://api.github.com/repos/#{LOGIN_USERNAME}/#{LOGIN_USERNAME}.github.io/contents/index.html"))
+    @sha = @response3['sha']
+    @content = Base64.decode64(@response3['content'])
+    @insert_index = @content.index('</head>')
+    @content = @content.insert(@insert_index, "  #{ADD_TO_HEAD}\n  ")
+    @insert_index = @content.index('</body>')
+    @content = @content.insert(@insert_index, "  #{ADD_TO_BODY}\n  ")
+    @content_base64 = Base64.encode64(@content)
+    @body = {
+      message: "Adding snippets",
+      sha: @sha,
+      content: @content_base64,
+      committer: {
+        name: @response2['name'],
+        email: @response2['email']
+      }
+    }
+    @response4 = HTTP.auth("Bearer #{@access_token}")
+      .put("https://api.github.com/repos/#{LOGIN_USERNAME}/#{LOGIN_USERNAME}.github.io/contents/index.html", json: @body)
+
     if !@response2['message']
       # Add new entry to db
       # Since 'type' is not allowed as a column and 'created_at'/'updated_at' fields are the same with
